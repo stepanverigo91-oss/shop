@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GTA 6 Shop</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+        body {
+            background: #0a0a0a;
+            color: white;
+            padding: 16px;
+        }
+        .header {
+            text-align: center;
+            background: #1a1a2e;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+        }
+        .header h1 {
+            font-size: 28px;
+            color: #ff6b35;
+        }
+        .header p {
+            color: #888;
+            font-size: 14px;
+        }
+        .product {
+            background: #1a1a2e;
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 12px;
+            border: 1px solid #2a2a4a;
+        }
+        .product h3 {
+            font-size: 18px;
+        }
+        .product .price {
+            font-size: 20px;
+            color: #ff6b35;
+            font-weight: bold;
+            margin: 6px 0;
+        }
+        .product .btn {
+            background: #ff6b35;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-size: 14px;
+            cursor: pointer;
+            margin-right: 8px;
+        }
+        .product .btn-gray {
+            background: #2a2a4a;
+        }
+        .contacts {
+            background: #1a1a2e;
+            border-radius: 12px;
+            padding: 16px;
+            margin-top: 20px;
+        }
+        .contacts a {
+            display: block;
+            color: white;
+            text-decoration: none;
+            padding: 8px 0;
+            border-bottom: 1px solid #2a2a2a;
+        }
+        .contacts a:last-child {
+            border-bottom: none;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.8);
+            padding: 20px;
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-box {
+            background: #1a1a2e;
+            border-radius: 12px;
+            padding: 24px;
+            max-width: 400px;
+            width: 100%;
+            border: 1px solid #ff6b35;
+        }
+        .modal-box h2 {
+            color: #ff6b35;
+            margin-bottom: 12px;
+        }
+        .modal-box p {
+            color: #ccc;
+            line-height: 1.6;
+            margin-bottom: 6px;
+        }
+        .modal-box .close {
+            background: #2a2a4a;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 8px;
+            width: 100%;
+            margin-top: 12px;
+            cursor: pointer;
+        }
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #1a1a2e;
+            padding: 12px 24px;
+            border-radius: 12px;
+            border: 1px solid #ffd700;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <h1>🎮 GTA 6 Shop</h1>
+    <p>⭐ Официальный дилер — 100% гарантия</p>
+</div>
+
+<!-- ТОВАР 1 -->
+<div class="product">
+    <h3>🎮 PlayStation 5</h3>
+    <div class="badge" style="color:#ffd700;font-size:12px;">EU / Worldwide</div>
+    <div class="price">4 999 ₽</div>
+    <button class="btn" onclick="openModal('ps5')">📄 Подробнее</button>
+    <button class="btn btn-gray" onclick="ask()">📞 Спросить</button>
+</div>
+
+<!-- ТОВАР 2 -->
+<div class="product">
+    <h3>🎮 Xbox Series X|S</h3>
+    <div class="badge" style="color:#ffd700;font-size:12px;">EU / Worldwide</div>
+    <div class="price">4 999 ₽</div>
+    <button class="btn" onclick="openModal('xbox')">📄 Подробнее</button>
+    <button class="btn btn-gray" onclick="ask()">📞 Спросить</button>
+</div>
+
+<!-- ТОВАР 3 -->
+<div class="product">
+    <h3>💻 PC (Rockstar Launcher)</h3>
+    <div class="badge" style="color:#ffd700;font-size:12px;">EU / Worldwide</div>
+    <div class="price">4 499 ₽</div>
+    <button class="btn" onclick="openModal('pc')">📄 Подробнее</button>
+    <button class="btn btn-gray" onclick="ask()">📞 Спросить</button>
+</div>
+
+<!-- КОНТАКТЫ -->
+<div class="contacts">
+    <h3 style="color:#ffd700;margin-bottom:12px;">📞 Связь с нами</h3>
+    <a href="https://t.me/ваш_ник">💬 Поддержка: @ваш_ник</a>
+    <a href="https://t.me/ваш_канал">📢 Новости: @ваш_канал</a>
+    <a href="mailto:shop@example.com">✉️ Email: shop@example.com</a>
+</div>
+
+<!-- МОДАЛЬНОЕ ОКНО -->
+<div class="modal" id="modal">
+    <div class="modal-box">
+        <h2 id="modalTitle">Название</h2>
+        <div id="modalText">
+            <p>Описание</p>
+        </div>
+        <button class="close" onclick="closeModal()">✖ Закрыть</button>
+    </div>
+</div>
+
+<!-- УВЕДОМЛЕНИЕ -->
+<div class="toast" id="toast">✅ Запрос отправлен!</div>
+
+<script>
+    // ОПИСАНИЯ ТОВАРОВ
+    const descriptions = {
+        ps5: `
+            <p>🎮 <b>GTA 6 — Стандартное издание</b></p>
+            <p>Платформа: <b>PlayStation 5</b></p>
+            <p>Регион: <b>EU (Worldwide)</b></p>
+            <p>Доступно: <b>147 шт.</b></p>
+            <hr style="border-color:#2a2a4a;margin:10px 0;">
+            <p>📄 <b>Что в комплекте:</b></p>
+            <p>• Цифровой ключ активации</p>
+            <p>• Предзагрузка за 48 часов</p>
+            <p>• Бонус: 500 000 виртуальных $</p>
+        `,
+        xbox: `
+            <p>🎮 <b>GTA 6 — Стандартное издание</b></p>
+            <p>Платформа: <b>Xbox Series X|S</b></p>
+            <p>Регион: <b>EU (Worldwide)</b></p>
+            <p>Доступно: <b>89 шт.</b></p>
+            <hr style="border-color:#2a2a4a;margin:10px 0;">
+            <p>📄 <b>Что в комплекте:</b></p>
+            <p>• Цифровой ключ активации</p>
+            <p>• Предзагрузка за 48 часов</p>
+            <p>• Бонус: 500 000 виртуальных $</p>
+        `,
+        pc: `
+            <p>🎮 <b>GTA 6 — Стандартное издание</b></p>
+            <p>Платформа: <b>PC (Rockstar Launcher)</b></p>
+            <p>Регион: <b>EU (Worldwide)</b></p>
+            <p>Доступно: <b>234 шт.</b></p>
+            <hr style="border-color:#2a2a4a;margin:10px 0;">
+            <p>📄 <b>Что в комплекте:</b></p>
+            <p>• Цифровой ключ активации</p>
+            <p>• Предзагрузка за 48 часов</p>
+            <p>• Бонус: 500 000 виртуальных $</p>
+            <hr style="border-color:#2a2a4a;margin:10px 0;">
+            <p>⚙️ <b>Системные требования:</b></p>
+            <p>• ОС: Windows 10/11</p>
+            <p>• CPU: Intel i7-8700K</p>
+            <p>• RAM: 16 GB</p>
+            <p>• GPU: NVIDIA RTX 2070</p>
+            <p>• SSD: 150 GB</p>
+        `
+    };
+
+    const titles = {
+        ps5: '🎮 PlayStation 5',
+        xbox: '🎮 Xbox Series X|S',
+        pc: '💻 PC (Rockstar Launcher)'
+    };
+
+    function openModal(id) {
+        document.getElementById('modalTitle').textContent = titles[id];
+        document.getElementById('modalText').innerHTML = descriptions[id];
+        document.getElementById('modal').style.display = 'flex';
+    }
+
+    function closeModal() {
+        document.getElementById('modal').style.display = 'none';
+    }
+
+    // Закрытие по клику на фон
+    document.getElementById('modal').addEventListener('click', function(e) {
+        if (e.target === this) closeModal();
+    });
+
+    function ask() {
+        const toast = document.getElementById('toast');
+        toast.style.display = 'block';
+        setTimeout(() => { toast.style.display = 'none'; }, 3000);
+    }
+
+    // Если открыто в Telegram — расширяем на весь экран
+    if (window.Telegram && window.Telegram.WebApp) {
+        window.Telegram.WebApp.expand();
+        window.Telegram.WebApp.ready();
+    }
+</script>
+
+</body>
+</html>
